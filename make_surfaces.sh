@@ -5,7 +5,7 @@ FSLPREFIX="fsl5.0-"
 mkdir surfaces
 OUTp="surfaces/"
 
-IN="In-sub-Maga_ses-01_mp2rageT1w_denoised_debiased_in-inia19_sub-Maga_res-7WM_4CSF_0mvt_macaque_vs_all_t"
+IN="sub-Musly_ses-01_T1w_Mean_denoised_debiased_in-inia19_grey_white"
 cIN=$OUTp$IN
 
 "${FSLPREFIX}fslmaths" $IN $cIN -odt short
