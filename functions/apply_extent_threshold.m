@@ -1,4 +1,4 @@
-function apply_extent_threshold(in_file,out_file,clust_thres,extent_threshold_vox,isMION,conn)
+function out_file = apply_extent_threshold(in_file,out_file,peak_threshold,clust_thres,extent_threshold_vox,isMION,conn)
 
 if ~exist('conn','var')
 	conn = 18;
@@ -39,6 +39,8 @@ for n = 1:num
     end
 end
 
+mask(Yt > peak_threshold) = true;
+
 Yt(~mask) = 0;
 
 P = Pt;
@@ -48,8 +50,11 @@ spm_write_vol(P,Yt);
 
 if tozip
 	system(['gzip ' out_file]);
+	out_file = [out_file '.gz'];
 end
 
+
+fprintf('Output file:\n%s\n',out_file)
 
 % in_file = '/hpc/banco/Primavoice_Data_and_Analysis/second_level_analysis_macaques/second_level_macaques_fixed_macaque_vs_all_t.nii.gz';
 % out_file = '/hpc/banco/Primavoice_Data_and_Analysis/second_level_analysis_macaques/second_level_macaques_fixed_macaque_vs_all_t_clust-thresholded.nii';
