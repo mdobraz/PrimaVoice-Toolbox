@@ -22,6 +22,6 @@ if any(c) % if any
         fprintf('%s\n',f{i})
         system(['gzip ' f{i}]); % use system command because matlab command keeps the original by default
     end
-    BIDS = spm_BIDS(paths.dataset);
+    BIDS = spm_BIDS(BIDS.dir);
     fprintf('Done.\n')
 end
