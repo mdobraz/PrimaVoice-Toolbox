@@ -180,7 +180,7 @@ if ~same_analysis
                     if GLM_params.nPCs.(pca_tissues{i}) > 0
                         PCA_mat_file = select_PCA_file(smoothed_file,paths,pca_tissues{i});
                         if ~exist(PCA_mat_file,'file')
-                            run_PCA_image(smoothed_file,paths,pca_tissues{i},paths.func_pca_mask.(pca_tissues{i}));
+                            run_PCA_image(smoothed_file,paths,pca_tissues{i},paths.func.pca_mask.(pca_tissues{i}));
                         end
                         fmristat_PCA.(pca_tissues{i}) = load(PCA_mat_file);
                         
