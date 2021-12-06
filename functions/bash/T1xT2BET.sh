@@ -281,7 +281,7 @@ if [[ $NITER -gt 0 ]]; then
       cog=$Icog
       i=$(($NITER+1))
     else
-      "${FSLPREFIX}fslmaths" ${TMP[T1mulT2_temp]} -mul ${TMP[T1mulT2_temp]} ${TMP[T1mulT2_pow]} # square values
+      "${FSLPREFIX}fslmaths" ${TMP[T1mulT2_temp]} -mul ${TMP[T1mulT2_temp]} -abs -sqrt ${TMP[T1mulT2_pow]} # square values
       cog=`"${FSLPREFIX}fslstats" ${TMP[T1mulT2_pow]} -C`
     fi
     echo "cog: $cog"

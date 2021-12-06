@@ -242,7 +242,6 @@ fi
 echo "Multiplying T1w & T2w images..."
 "${FSLPREFIX}fslmaths" $T1 -mul $T2 -abs -sqrt ${TMP[T1mulT2]} -odt float
 
-
 # Brain mask
 if [[ -n "$BRAIN" ]]; then
   echo "Applying brain mask..."
@@ -251,10 +250,12 @@ elif [[ $TRYBET -ne 0 ]]; then
   cp ${TMP[T1mulT2]} ${TMP[T1mulT2_temp]}
   for ((i = 1 ; i  <= $TRYBET ; i++)); do
     echo "BETing T1xT2 iteration #$i..."
-    "${FSLPREFIX}fslmaths" ${TMP[T1mulT2_temp]} -mul ${TMP[T1mulT2_temp]} ${TMP[T1mulT2_pow]} # square values
+    "${FSLPREFIX}fslmaths" ${TMP[T1mulT2_temp]} -mul ${TMP[T1mulT2_temp]} -abs -sqrt ${TMP[T1mulT2_pow]} # square values
     cog=`"${FSLPREFIX}fslstats" ${TMP[T1mulT2_pow]} -C`
+    # cog=`"${FSLPREFIX}fslstats" ${TMP[T1mulT2_temp]} -C`
     echo "cog: $cog"
     "${FSLPREFIX}bet" ${TMP[T1mulT2_temp]} ${TMP[T1mulT2_BET]} -m -c $cog -f $BETF -g $BETG
+    # "${FSLPREFIX}bet" ${TMP[T1mulT2_temp]} ${TMP[T1mulT2_BET]} -m -f $BETF -g $BETG
     mv ${TMP[T1mulT2_BET]} ${TMP[T1mulT2_temp]}
   done
   "${FSLPREFIX}fslmaths" ${TMP[T1mulT2]} -mas ${TMP[T1mulT2_BET_mask]} ${TMP[T1mulT2_masked]}
